@@ -9,5 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/contract-number")
 class ContractNumberController {
     @GetMapping("/{contractNumber}/validate")
-    fun validateContractNumber(@PathVariable("contractNumber") contractNumber: ContractNumber) {}
+    fun validateContractNumber(@PathVariable("contractNumber") contractNumber: ContractNumber): ContractNumber {
+        return contractNumber
+    }
 }
