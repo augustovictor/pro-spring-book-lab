@@ -1,18 +1,20 @@
 package com.github.augustovictor.prospringbooklab.contractNumber
 
+import com.github.augustovictor.prospringbooklab.converter.AppConfig
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Import
+import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(ContractNumberController::class)
+@Import(AppConfig::class)
 class ContractNumberControllerTest {
 
     @Autowired
@@ -24,6 +26,8 @@ class ContractNumberControllerTest {
 
         val request = MockMvcRequestBuilders
                 .get("/contract-number/$validContractNumber/validate")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
 
         mockMvc.perform(request)
                 .andExpect(status().isOk)
