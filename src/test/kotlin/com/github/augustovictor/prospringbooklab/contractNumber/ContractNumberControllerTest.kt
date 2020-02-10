@@ -1,8 +1,8 @@
 package com.github.augustovictor.prospringbooklab.contractNumber
 
 import com.github.augustovictor.prospringbooklab.converter.AppConfig
-import com.github.augustovictor.prospringbooklab.formatter.ApplicationConversionServiceFactoryBean
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,8 +37,17 @@ class ContractNumberControllerTest {
     }
 
     @Test
-    fun `should return 400 when contractNumber is NOT valid`() {
+    fun `should return 400 when contractNumber owner is empty`() {
+        val validContractNumber = "Z00000000"
 
+        val request = post("/contract-number/$validContractNumber")
+                .queryParam("issued_at", "25-01-2020")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest)
+                .andExpect(jsonPath("$.*", containsInAnyOrder("nonpositive.productId")))
     }
 
     @Test

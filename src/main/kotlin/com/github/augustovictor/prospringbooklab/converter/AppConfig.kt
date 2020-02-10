@@ -1,6 +1,7 @@
 package com.github.augustovictor.prospringbooklab.converter
 
 import com.github.augustovictor.prospringbooklab.formatter.ApplicationConversionServiceFactoryBean
+import com.github.augustovictor.prospringbooklab.validator.ContractNumberValidator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.ConversionServiceFactoryBean
@@ -28,4 +29,7 @@ class AppConfig {
 
     @Bean
     fun formatterService() = ApplicationConversionServiceFactoryBean()
+
+    @Bean
+    fun contractNumberValidator() = ContractNumberValidator()
 }
