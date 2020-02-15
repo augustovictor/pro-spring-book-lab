@@ -1,20 +1,33 @@
 package com.github.augustovictor.prospringbooklab.movie
 
 import com.github.augustovictor.prospringbooklab.validator.MovieValidationService
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/movies")
 class MovieController(
         private val movieValidationService: MovieValidationService
 ) {
+
+    private val logger = LoggerFactory.getLogger(javaClass)
+
+    @GetMapping
+    fun getAll(): List<Movie> {
+        logger.trace("Request to '/movies' received successfully")
+
+        return listOf(
+                Movie("movie 1", "description for movie 1"),
+                Movie("movie 2", "description for movie 2"),
+                Movie("movie 3", "description for movie 3"),
+                Movie("movie 4", "description for movie 4"),
+                Movie("movie 5", "description for movie 5")
+        )
+    }
+
     @PostMapping
     fun creteMovie(@RequestBody movie: Movie): ResponseEntity<*> {
-
         val constraintViolations = movieValidationService.validateMovie(movie)
 
         if (constraintViolations.isNotEmpty()) {
