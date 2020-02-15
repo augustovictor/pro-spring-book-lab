@@ -5,7 +5,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %magenta([%thread]) %logger{36}.%M</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight(%-5level) %magenta([%thread]) CorrelationId[%X{CorrelationId}] --- %logger{36}.%M</pattern>
         </encoder>
     </appender>
 
@@ -24,8 +24,19 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+            <jsonFormatter
+                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+                <prettyPrint>true</prettyPrint>
+            </jsonFormatter>
+            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+        </layout>
+    </appender>
+
     <logger name="com.github.augustovictor.prospringbooklab.movie" level="TRACE">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="json" />
         <appender-ref ref="SAVE-TO-FILE" />
     </logger>
 </configuration>
