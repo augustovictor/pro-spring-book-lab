@@ -19,8 +19,8 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/archived/log_%d{dd-MM-yyyy}_%i.log</fileNamePattern>
             <maxFileSize>1KB</maxFileSize>
-            <maxHistory>3</maxHistory>
-            <totalSizeCap>5KB</totalSizeCap>
+            <maxHistory>3</maxHistory> <!-- specifies how long the archived log files will be kept before they are automatically deleted -->
+            <totalSizeCap>5KB</totalSizeCap> <!-- limits the maximum size of all archived log files -->
         </rollingPolicy>
     </appender>
 
