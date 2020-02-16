@@ -1,14 +1,17 @@
 package com.github.augustovictor.prospringbooklab.movie
 
+import com.github.augustovictor.prospringbooklab.infra.ExternalMovieClient
 import com.github.augustovictor.prospringbooklab.validator.MovieValidationService
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/movies")
 class MovieController(
-        private val movieValidationService: MovieValidationService
+        private val movieValidationService: MovieValidationService,
+        private val externalMovieClient: ExternalMovieClient
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -39,4 +42,8 @@ class MovieController(
 
         return ResponseEntity.ok().body(movie)
     }
+
+    @GetMapping("/external")
+    fun fetchAllExternal() = externalMovieClient.fetchAll(MDC.get("CorrelationId"))
+            .also { logger.trace("Request to '/movies/external' received successfully") }
 }

@@ -26,17 +26,19 @@
 
     <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
-            <jsonFormatter
-                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+            <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
                 <prettyPrint>true</prettyPrint>
             </jsonFormatter>
             <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
         </layout>
     </appender>
 
-    <logger name="com.github.augustovictor.prospringbooklab.movie" level="TRACE">
+    <logger name="com.github.augustovictor.prospringbooklab.movie.MovieController" level="TRACE" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="json" />
         <appender-ref ref="SAVE-TO-FILE" />
     </logger>
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
 </configuration>

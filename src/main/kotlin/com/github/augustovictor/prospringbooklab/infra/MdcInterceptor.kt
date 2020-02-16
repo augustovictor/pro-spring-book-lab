@@ -1,12 +1,12 @@
 package com.github.augustovictor.prospringbooklab.infra
 
 import org.slf4j.MDC
-import org.springframework.web.servlet.HandlerInterceptor
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class MdcInterceptor : HandlerInterceptor {
+class MdcInterceptor : HandlerInterceptorAdapter() {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val correlationId = request.getHeader("CorrelationId") ?: getCorrelationId()
 
