@@ -33,7 +33,7 @@
         </layout>
     </appender>
 
-    <logger name="com.github.augustovictor.prospringbooklab.movie.MovieController" level="TRACE" additivity="false">
+    <logger name="com.github.augustovictor.prospringbooklab" level="TRACE" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="json" />
         <appender-ref ref="SAVE-TO-FILE" />
