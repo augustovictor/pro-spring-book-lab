@@ -41,7 +41,7 @@
         <appender-ref ref="json" />
         <appender-ref ref="SAVE-TO-FILE" />
     </logger>
-    <root level="INFO">
+    <root level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
