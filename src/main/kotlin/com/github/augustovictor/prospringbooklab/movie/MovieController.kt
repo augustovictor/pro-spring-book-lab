@@ -45,5 +45,7 @@ class MovieController(
 
     @GetMapping("/external")
     fun fetchAllExternal() = externalMovieClient.fetchAll(MDC.get("CorrelationId"))
-            .also { logger.trace("Request to '/movies/external' received successfully") }
+
+    @GetMapping("/bad-request")
+    fun badRequest() = externalMovieClient.badRequest(MDC.get("CorrelationId"))
 }

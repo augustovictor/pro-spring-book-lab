@@ -18,6 +18,21 @@ import java.io.IOException
 interface ExternalMovieClient {
     @GetMapping
     fun fetchAll(@RequestHeader("CorrelationId") correlationId: String): List<Movie>
+
+    @GetMapping("/bad-request")
+    fun badRequest(@RequestHeader("CorrelationId") correlationId: String): Any
+
+    // TODO: Implement result handler to log
+
+    // TODO: Implement a request interceptor so there is no need to pass as an argument the CorrelationId
+
+    // TODO: Implement tests for happy path and edge cases
+
+    // TODO: Implement wiremock
+
+    // TODO: Send logs to aws cloudwatch to see how logs are presented
+
+    // TODO: Implement ELK to search logs
 }
 
 @Configuration
