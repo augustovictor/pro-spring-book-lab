@@ -1,30 +1,31 @@
 package com.github.augustovictor.prospringbooklab.infra
 
 import com.github.augustovictor.prospringbooklab.movie.Movie
-import feign.Logger
-import feign.Response
-import feign.Util
+import feign.*
 import feign.codec.ErrorDecoder
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestHeader
 import java.io.IOException
 
 
 @FeignClient(name = "externalMovieClient", url = "http://localhost:3000/movies", configuration = [DefaultCustomFeingClientConfiguration::class])
 interface ExternalMovieClient {
     @GetMapping
-    fun fetchAll(@RequestHeader("CorrelationId") correlationId: String): List<Movie>
+    fun fetchAll(): List<Movie>
 
     @GetMapping("/bad-request")
-    fun badRequest(@RequestHeader("CorrelationId") correlationId: String): Any
+    fun badRequest(): Any
+
+    // TODO: Implement custom encoder to log
 
     // TODO: Implement result handler to log
 
-    // TODO: Implement a request interceptor so there is no need to pass as an argument the CorrelationId
+    // TODO: Log to stdout as json inside the "message" field
 
     // TODO: Implement tests for happy path and edge cases
 
@@ -43,9 +44,7 @@ class DefaultCustomFeingClientConfiguration {
     }
 
     @Bean
-    fun errorDecoder(): ErrorDecoder {
-        return DefaultCustomErrorDecoder()
-    }
+    fun errorDecoder(): ErrorDecoder = DefaultCustomErrorDecoder()
 }
 
 /**
@@ -74,3 +73,10 @@ class DefaultCustomErrorDecoder : ErrorDecoder {
 }
 
 class ExternalCommunicationFailureException(message: String) : Exception(message)
+
+@Component
+class CustomRequestInterceptor : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
+        requestTemplate.header("CorrelationId", MDC.get("CorrelationId"))
+    }
+}

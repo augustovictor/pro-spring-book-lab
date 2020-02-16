@@ -3,7 +3,6 @@ package com.github.augustovictor.prospringbooklab.movie
 import com.github.augustovictor.prospringbooklab.infra.ExternalMovieClient
 import com.github.augustovictor.prospringbooklab.validator.MovieValidationService
 import org.slf4j.LoggerFactory
-import org.slf4j.MDC
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -44,8 +43,8 @@ class MovieController(
     }
 
     @GetMapping("/external")
-    fun fetchAllExternal() = externalMovieClient.fetchAll(MDC.get("CorrelationId"))
+    fun fetchAllExternal() = externalMovieClient.fetchAll()
 
     @GetMapping("/bad-request")
-    fun badRequest() = externalMovieClient.badRequest(MDC.get("CorrelationId"))
+    fun badRequest() = externalMovieClient.badRequest()
 }
