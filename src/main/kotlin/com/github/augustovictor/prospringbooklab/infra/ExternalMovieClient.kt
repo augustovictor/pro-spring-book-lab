@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
 import java.io.IOException
 
-@FeignClient(name = "externalMovieClient", url = "http://localhost:3000/movies")
+
+@FeignClient(name = "externalMovieClient", url = "http://localhost:3000/movies", configuration = [DefaultCustomFeingClientConfiguration::class])
 interface ExternalMovieClient {
     @GetMapping
     fun fetchAll(@RequestHeader("CorrelationId") correlationId: String): List<Movie>
