@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
 abstract class LogWrapper(protected val service: Class<*>) {
 	protected val logger: Logger = LoggerFactory.getLogger(service)
 
-	abstract fun info(msg: String)
+	abstract fun info(msg: String, obj: Any? = null)
 	abstract fun trace(service: String, correlationId: String, msg: String)
 	abstract fun debug(service: String, correlationId: String, msg: String)
 	abstract fun error(service: String, correlationId: String, msg: String, exception: Exception)
@@ -30,8 +30,13 @@ abstract class LogWrapper(protected val service: Class<*>) {
 
 class CustomLogWrapper(service: Class<*>) : LogWrapper(service) {
 
-	override fun info(msg: String) {
-		logger.info(msg, keyValue("correlation_id", MDC.get("CorrelationId") ?: ""), value("service", service.toString().substringAfterLast(".")))
+	override fun info(msg: String, obj: Any?) {
+		logger.info(
+				msg,
+				keyValue("correlation_id", MDC.get("CorrelationId") ?: ""),
+				value("service", service.toString().substringAfterLast(".")),
+				keyValue("object", obj)
+		)
 	}
 
 	override fun trace(service: String, correlationId: String, msg: String) {

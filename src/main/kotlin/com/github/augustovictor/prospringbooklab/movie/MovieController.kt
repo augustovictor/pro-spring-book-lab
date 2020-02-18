@@ -19,16 +19,18 @@ class MovieController(
 
     @GetMapping
     fun getAll(): List<Movie> {
-        logger.trace("Request to '/movies' received successfully")
-        customLogger.info("Request to '/movies' received successfully")
-
-        return listOf(
+        val movies = listOf(
                 Movie("movie 1", "description for movie 1"),
                 Movie("movie 2", "description for movie 2"),
                 Movie("movie 3", "description for movie 3"),
                 Movie("movie 4", "description for movie 4"),
                 Movie("movie 5", "description for movie 5")
         )
+
+        logger.trace("Request to '/movies' received successfully")
+        customLogger.info("Request to '/movies' received successfully", movies)
+
+        return movies
     }
 
     @PostMapping
