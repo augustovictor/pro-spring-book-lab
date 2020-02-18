@@ -14,6 +14,7 @@ Log consolidation VS log streaming
 - Context id
 - Context id hierarchy
 
+- [x] Log wrapper
 - [x] Implement MDC
 - [ ] Enrich MDC info in another layer of the system
 - [x] External service with feignClient

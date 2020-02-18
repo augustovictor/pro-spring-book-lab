@@ -1,5 +1,6 @@
 package com.github.augustovictor.prospringbooklab.movie
 
+import com.github.augustovictor.prospringbooklab.CustomLogWrapper
 import com.github.augustovictor.prospringbooklab.infra.ExternalMovieClient
 import com.github.augustovictor.prospringbooklab.validator.MovieValidationService
 import org.slf4j.LoggerFactory
@@ -14,10 +15,12 @@ class MovieController(
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val customLogger = CustomLogWrapper(javaClass)
 
     @GetMapping
     fun getAll(): List<Movie> {
         logger.trace("Request to '/movies' received successfully")
+        customLogger.info("Request to '/movies' received successfully")
 
         return listOf(
                 Movie("movie 1", "description for movie 1"),

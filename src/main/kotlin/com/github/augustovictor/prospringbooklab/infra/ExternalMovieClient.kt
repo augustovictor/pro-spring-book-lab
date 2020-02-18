@@ -25,8 +25,6 @@ interface ExternalMovieClient {
 
     // TODO: Implement result handler to log
 
-    // TODO: Log to stdout as json inside the "message" field
-
     // TODO: Implement tests for happy path and edge cases
 
     // TODO: Implement wiremock
